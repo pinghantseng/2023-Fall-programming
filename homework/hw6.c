@@ -1,12 +1,12 @@
 #include <stdio.h>
 #define SIZE 8
-#define BLANK 0  //ªÅ¥Õ
+#define BLANK 0  //ç©ºç™½
 #define BLACK 1
 #define WHITE 2
-#define BOUND (x+((a+1) * dx) > -1) && (x+((a+1) * dx) < SIZE) && (y+((a+1) * dy) > -1) && (y+((a+1) * dy) < SIZE)  //§PÂ_¬O§_¶W¥XÃä¬É
+#define BOUND (x+((a+1) * dx) > -1) && (x+((a+1) * dx) < SIZE) && (y+((a+1) * dy) > -1) && (y+((a+1) * dy) < SIZE)  //åˆ¤æ–·æ˜¯å¦è¶…å‡ºé‚Šç•Œ
 
-// ¾î¶b¬O y, Áa¶b¬O x
-// ¹q¸£¥Õ´Ñ, ¤HÃş¶Â´Ñ
+// æ©«è»¸æ˜¯ y, ç¸±è»¸æ˜¯ x
+// é›»è…¦ç™½æ£‹, äººé¡é»‘æ£‹
 
 int chess[SIZE][SIZE] ={{0,0,0,0,0,0,0,0},
                         {0,0,0,0,0,0,0,0},
@@ -18,9 +18,9 @@ int chess[SIZE][SIZE] ={{0,0,0,0,0,0,0,0},
                         {0,0,0,0,0,0,0,0}};
 
 int next[2][SIZE][SIZE] = {0};
-int position[2] = {0};  //¨ç¼Æ¦^¶Ç­È
+int position[2] = {0};  //å‡½æ•¸å›å‚³å€¼
 
-//±Nnext°}¦C¸Ìªº­È³]¬°0
+//å°‡nexté™£åˆ—è£¡çš„å€¼è¨­ç‚º0
 void clear(void){
     for(int a = 1; a < 3; a++)
         for (int x = 0; x < SIZE; x++)
@@ -29,7 +29,7 @@ void clear(void){
     return;
 }
 
-//´M§ä¶Â´Ñ»P¥Õ´Ñ©Ò¦³¥i¥H¤Uªº¦ì¸m¤Î¥iÂ½Âà´Ñ¤lªº¼Æ¥ØÀx¦s¦bnext°}¦C¤¤
+//å°‹æ‰¾é»‘æ£‹èˆ‡ç™½æ£‹æ‰€æœ‰å¯ä»¥ä¸‹çš„ä½ç½®åŠå¯ç¿»è½‰æ£‹å­çš„æ•¸ç›®å„²å­˜åœ¨nexté™£åˆ—ä¸­
 void findChessToFlip(void){
     for (int x = 0; x < SIZE; x++){
         for (int y = 0; y < SIZE; y++){
@@ -67,17 +67,17 @@ void findChessToFlip(void){
     return;
 }
 
-//¿é¤JÃC¦â ¿é¥X¸ÓÃC¦â©Ò¦³¥i¥H¤Uªº¦ì¸m¤Î¥iÂ½Âà´Ñ¤lªº¼Æ¥Ø
+//è¼¸å…¥é¡è‰² è¼¸å‡ºè©²é¡è‰²æ‰€æœ‰å¯ä»¥ä¸‹çš„ä½ç½®åŠå¯ç¿»è½‰æ£‹å­çš„æ•¸ç›®
 void checkNewStep(int color){
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++)
             if(next[color][i][j] > 0)
-                printf("(%d, %c) ¥iÂ½Âà %d ¤l\n", i+1, j+'a', next[color][i][j]);
+                printf("(%d, %c) å¯ç¿»è½‰ %d å­\n", i+1, j+'a', next[color][i][j]);
     }
     return;
 }
 
-//¿é¥X´Ñ½L
+//è¼¸å‡ºæ£‹ç›¤
 void outputArray(void){
     printf("  a b c d e f g h\n");
     for (int i = 0; i < SIZE; i++){
@@ -89,7 +89,7 @@ void outputArray(void){
     return;
 }
 
-//¿é¤JÃC¦â §ä¥X¸ÓÃC¦â¥i¥HÂ½³Ì¦h´Ñ¤lªº¦ì¸m ¨Ã¿é¥X¸Ó¦ì¸m
+//è¼¸å…¥é¡è‰² æ‰¾å‡ºè©²é¡è‰²å¯ä»¥ç¿»æœ€å¤šæ£‹å­çš„ä½ç½® ä¸¦è¼¸å‡ºè©²ä½ç½®
 void findMostValueChess(int color){
     int value = 0;
     for (int i = 0; i < SIZE; i++){
@@ -102,13 +102,13 @@ void findMostValueChess(int color){
         }
     }
     if(color == 1)
-        printf("¶Â´Ñ¤U (%d, %c)\n", position[1]+1, position[2]+'a');
+        printf("é»‘æ£‹ä¸‹ (%d, %c)\n", position[1]+1, position[2]+'a');
     if(color == 2)
-        printf("¥Õ´Ñ¤U (%d, %c)\n", position[1]+1, position[2]+'a');
+        printf("ç™½æ£‹ä¸‹ (%d, %c)\n", position[1]+1, position[2]+'a');
     return;
 }
 
-//¿é¤JÃC¦â §PÂ_¸ÓÃC¦â¬O§_¦³´Ñ¤l¥i¤U ¦³¦^¶Ç1 µL¦^¶Ç0
+//è¼¸å…¥é¡è‰² åˆ¤æ–·è©²é¡è‰²æ˜¯å¦æœ‰æ£‹å­å¯ä¸‹ æœ‰å›å‚³1 ç„¡å›å‚³0
 int noChessToFlip(int color){
     int u = 0;
     for (int i = 0; i < SIZE; i++){
@@ -122,7 +122,7 @@ int noChessToFlip(int color){
     if(u > 0) return 1;
 }
 
-//¿é¤J¤Uªº´Ñ¤l¤ÎÃC¦â Â½´Ñ¤l§ó§ï´Ñ½L
+//è¼¸å…¥ä¸‹çš„æ£‹å­åŠé¡è‰² ç¿»æ£‹å­æ›´æ”¹æ£‹ç›¤
 void flipChess(int x, int y, int color){
     int flipCheck = next[BLACK][x][y];
     int flip, antiColor;
@@ -159,12 +159,12 @@ void flipChess(int x, int y, int color){
     return;
 }
 
-//¿é¤JÃC¦â ¿é¤J¤U´Ñªº¦ì¸m µLªk¤U´Ñ«h­«·s¿é¤J ¨ÃÂ½´Ñ¤l
+//è¼¸å…¥é¡è‰² è¼¸å…¥ä¸‹æ£‹çš„ä½ç½® ç„¡æ³•ä¸‹æ£‹å‰‡é‡æ–°è¼¸å…¥ ä¸¦ç¿»æ£‹å­
 void input(int color){
     char b;
     int a, x, y;
     while(1){
-        printf("¿é¤J±z­n¤Uªº¦ì¸m");
+        printf("è¼¸å…¥æ‚¨è¦ä¸‹çš„ä½ç½®");
         scanf("%d %c", &a, &b);
         x = a - 1;
         y = b - 'a';
@@ -177,7 +177,7 @@ void input(int color){
     return;
 }
 
-//²Î­p²×§½´Ñ½L¦UÃC¦â´Ñ¤lªº¼Æ¥Ø ¨Ã¿é¥X¤ñÁÉµ²ªG
+//çµ±è¨ˆçµ‚å±€æ£‹ç›¤å„é¡è‰²æ£‹å­çš„æ•¸ç›® ä¸¦è¼¸å‡ºæ¯”è³½çµæœ
 void resultOfTheGame(void){
     int numOfWhite=0, numOfBlack=0;
     for (int i = 0; i < SIZE; i++){
@@ -189,11 +189,11 @@ void resultOfTheGame(void){
     }
 
     if(numOfBlack > numOfWhite)
-        printf("¶Â¤è³Ó %d:%d", numOfBlack, numOfWhite);
+        printf("é»‘æ–¹å‹ %d:%d", numOfBlack, numOfWhite);
     else if(numOfBlack < numOfWhite)
-        printf("¥Õ¤è³Ó %d:%d", numOfWhite, numOfBlack);
+        printf("ç™½æ–¹å‹ %d:%d", numOfWhite, numOfBlack);
     else if(numOfBlack == numOfWhite)
-        printf("©M§½ %d:%d", numOfBlack, numOfWhite);
+        printf("å’Œå±€ %d:%d", numOfBlack, numOfWhite);
     return;
 }
 
@@ -201,7 +201,7 @@ int main(){
     char b;
     int a, x, y, time=0;
 
-    printf("´Ñ§½¶}©l\nª±®a¶Â´Ñ ¹q¸£¥Õ´Ñ ¶Â´Ñ¥ı¤U\n");
+    printf("æ£‹å±€é–‹å§‹\nç©å®¶é»‘æ£‹ é›»è…¦ç™½æ£‹ é»‘æ£‹å…ˆä¸‹\n");
       
     while(time == 0 || noChessToFlip(BLACK) + noChessToFlip(WHITE) > 0){
         outputArray();
@@ -211,7 +211,7 @@ int main(){
         if(noChessToFlip(BLACK) > 0 || time == 0){
             clear();
             findChessToFlip();
-            printf("¶Â¤l¥i¤Uªº¦ì¸m¡G\n");
+            printf("é»‘å­å¯ä¸‹çš„ä½ç½®ï¼š\n");
             checkNewStep(BLACK);
             input(BLACK);
         }
@@ -226,7 +226,7 @@ int main(){
         time++;
     }
 
-    printf("´Ñ§½µ²§ô\n");
+    printf("æ£‹å±€çµæŸ\n");
     resultOfTheGame();
 
     return 0;
