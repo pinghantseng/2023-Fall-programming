@@ -19,9 +19,7 @@ int maze[SIZE][SIZE] = {
 int dirx[4] = {0, 1, 0, -1};
 int diry[4] = {1, 0, -1, 0};
 
-int ans[SIZE][SIZE] = {0};
-
-Pos find(Stack *p, Pos pos){
+Pos next(Stack *p, Pos pos){
     printf("move to %d, %d\n", pos.x, pos.y);
     maze[pos.x][pos.y] = 1;
     int num = 0;
@@ -55,13 +53,14 @@ int main(){
     Pos extrance = {1, 0};
     Pos exit = {6, 9};
     stackInit(&stack);
-    Pos pos = find(&stack, extrance);
+    Pos pos = next(&stack, extrance);
     while(pos.x != exit.x || pos.y != exit.y){
         if(pos.x == -1 && pos.y == -1){
             printf("No Exit!\n");
             break;
         }
-        pos = find(&stack, pos);
+        pos = next(&stack, pos);
     }
+    printf("move to %d, %d\n", exit.x, exit.y);
     return 0;
 }
